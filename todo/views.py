@@ -1,6 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from .models import NewTask
 
 
 def home(request):
-    return HttpResponse("<h1>Welcome!</h1>")
+    context = {"todo_list": NewTask.objects.all()}
+    return render(request, "todo/home.html", context=context)
+
+
+def insert_item(request):
+    content = request.POST.get("content")
+    new_task = NewTask(title=content)
+    new_task.save()
+    return redirect("home")
