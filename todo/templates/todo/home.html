@@ -44,6 +44,13 @@
                             </li>
                             {% for todo in todo_list %}
                             <li class="list-group-item">{{todo}}
+                                <form action="{% url 'delete_item' todo.id %}" method="post"
+                                    class="float-right d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn">
+                                        <i class="far fa-trash-alt lg text-danger float-right"></i>
+                                    </button>
+                                </form>
                                 {% empty %}
                                 <span class="font-italic">
                                     No todo item found.
